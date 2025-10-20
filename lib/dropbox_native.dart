@@ -33,11 +33,14 @@ part 'src/models/native_response.dart';
 ///
 /// dropbox.dispose(); // Cleanup
 /// ```
+/// 
 class DropboxNative {
   final String _clientId;
   final String _clientSecret;
 
   late final DropboxService service;
+String get clientId => _clientId;
+String get clientSecret => _clientSecret;
 
   /// Creates a new instance with client credentials.
   /// Does not initialize the native library—call [initialize] for that.
