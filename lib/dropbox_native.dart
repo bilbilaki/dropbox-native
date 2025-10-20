@@ -35,16 +35,16 @@ part 'src/models/native_response.dart';
 /// ```
 /// 
 class DropboxNative {
-  final String _clientId;
-  final String _clientSecret;
+  final String clientId;
+  final String clientSecret;
 
   late final DropboxService service;
-String get clientId => _clientId;
-String get clientSecret => _clientSecret;
+String get _clientId => clientId;
+String get _clientSecret => clientSecret;
 
   /// Creates a new instance with client credentials.
   /// Does not initialize the native library—call [initialize] for that.
-  DropboxNative(this._clientId, this._clientSecret) : service = DropboxService();
+  DropboxNative(this.clientId, this.clientSecret) : service = DropboxService();
 
   /// Initializes the native library, sets up the service, and event listeners.
   /// Must be called before any auth or file operations.
