@@ -23,7 +23,7 @@ extern const char *_GoStringPtr(_GoString_ s);
 
 #line 3 "libcross.go"
 
-#include <stdlib.h>
+#include <stdint.h>
 
 #line 1 "cgo-generated-wrapper"
 
@@ -89,36 +89,31 @@ extern "C" {
 
 extern void RegisterPort(long long int port);
 extern void UnregisterPort(void);
+
+// ---- Bridge init ----
 extern void BridgeInit(void* api);
-extern void StartAuthServer(char* clientID, char* clientSecret, long long int port);
-extern void ExchangeCodeForToken(char* clientID, char* clientSecret, char* code, char* verifier, long long int port);
-extern void RefreshToken(char* clientID, char* clientSecret, char* refreshToken, long long int port);
-extern void CountFileRequests(char* accessToken, long long int port);
-extern void CreateFileRequest(char* accessToken, char* argsJSON, long long int port);
-extern void DeleteFileRequests(char* accessToken, char* argsJSON, long long int port);
-extern void DeleteAllClosedFileRequests(char* accessToken, long long int port);
-extern void GetFileRequest(char* accessToken, char* id, long long int port);
-extern void ListFileRequests(char* accessToken, char* argsJSON, long long int port);
-extern void ListFileRequestsContinue(char* accessToken, char* cursor, long long int port);
-extern void UpdateFileRequest(char* accessToken, char* argsJSON, long long int port);
-extern void ListFolder(char* accessToken, char* argsJSON, long long int port);
-extern void ListFolderContinue(char* accessToken, char* cursor, long long int port);
-extern void CreateFolder(char* accessToken, char* path, int autorename, long long int port);
-extern void DeleteFile(char* accessToken, char* path, long long int port);
-extern void GetMetadata(char* accessToken, char* path, long long int port);
-extern void DownloadFile(char* accessToken, char* path, long long int port);
-extern void UploadFile(char* accessToken, char* argsJSON, char* dataB64, long long int port);
-extern void CopyFile(char* accessToken, char* fromPath, char* toPath, long long int port);
-extern void MoveFile(char* accessToken, char* fromPath, char* toPath, long long int port);
-extern void SearchV2(char* accessToken, char* query, char* optionsJSON, long long int port);
-extern void GetScopes(long long int port);
-extern void GetRedirectURI(long long int port);
-extern void GeneratePKCEVerifier(long long int port);
-extern void GeneratePKCEChallenge(char* verifier, long long int port);
-extern void GenerateState(long long int port);
+
+// ---- OAuth Functions ----
+extern void StartOAuthFlow(char* clientID, char* clientSecret, long long int dartPort);
+extern void HandleOAuthCallback(char* state, char* code, char* clientID, char* clientSecret, long long int dartPort);
+extern void RefreshToken(char* accountID, char* clientID, char* clientSecret, long long int dartPort);
+
+// ---- File Operations ----
+extern void ListFolder(char* accountID, char* path, long long int dartPort);
+extern long long int DownloadFile(char* accountID, char* remotePath, char* localPath, long long int dartPort);
+extern long long int UploadFile(char* accountID, char* localPath, char* remotePath, long long int dartPort);
+extern void GetFileMetadata(char* accountID, char* path, long long int dartPort);
+
+// ---- File Request Functions ----
+extern void ListFileRequests(char* accountID, long long int dartPort);
+extern void CreateFileRequest(char* accountID, char* title, char* destination, long long int dartPort);
+
+// ---- Task Management ----
 extern void StopTask(long long int taskID, long long int port);
-extern void GetLibraryVersion(long long int port);
-extern void GetEndpoints(long long int port);
+
+// ---- Cleanup ----
+extern void LogoutAccount(char* accountID, long long int dartPort);
+extern void CleanupAll(long long int dartPort);
 
 #ifdef __cplusplus
 }
